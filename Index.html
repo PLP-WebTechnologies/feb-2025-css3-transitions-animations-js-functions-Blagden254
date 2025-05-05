@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS3 Transitions and JS localStorage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f0f0f0;
+    }
+
+    #animateBtn {
+      padding: 15px 30px;
+      background-color: #3498db;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    #animateBtn.animate {
+      animation: bounce 0.5s;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    #colorSelect {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>CSS Animation with JavaScript</h2>
+
+  <button id="animateBtn">Click Me!</button>
+
+  <div id="colorSelect">
+    <label for="bgColor">Choose background color:</label>
+    <select id="bgColor">
+      <option value="#f0f0f0">Light</option>
+      <option value="#ffe6e6">Pink</option>
+      <option value="#e6ffe6">Green</option>
+      <option value="#e6f0ff">Blue</option>
+    </select>
+  </div>
+
+  <script>
+    const btn = document.getElementById("animateBtn");
+    const colorSelect = document.getElementById("bgColor");
+
+    // Load saved background color from localStorage
+    const savedColor = localStorage.getItem("bgColor");
+    if (savedColor) {
+      document.body.style.backgroundColor = savedColor;
+      colorSelect.value = savedColor;
+    }
+
+    // On color change, update background and localStorage
+    colorSelect.addEventListener("change", () => {
+      const selectedColor = colorSelect.value;
+      document.body.style.backgroundColor = selectedColor;
+      localStorage.setItem("bgColor", selectedColor);
+    });
+
+    // Trigger animation
+    btn.addEventListener("click", () => {
+      btn.classList.add("animate");
+      setTimeout(() => btn.classList.remove("animate"), 500);
+    });
+  </script>
+
+</body>
+</html>
